@@ -1,39 +1,59 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ميزانية البيت</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e6f66">
+  <title>ميزانية البيت</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<header>
-  <h1>ميزانية البيت</h1>
-  <div class="tools">
-    <button id="addMonth">+ شهر</button>
-    <button id="addRow">+ بند</button>
-    <button id="csv">تصدير Excel</button>
-    <button id="save">حفظ نسخة</button>
-    <label class="btn">استيراد نسخة<input type="file" id="load" accept=".json" hidden></label>
-    <button id="print">طباعة</button>
-    <button id="theme">الوضع الداكن</button>
-  </div>
-</header>
-<main>
-  <section class="sum">
-    <label>الشهر: <select id="mSel"></select></label>
-    <div id="cards"></div>
-  </section>
-  <section class="wrap"><table id="tbl"></table></section>
-  <p class="hint">اكتب المبلغ مباشرة، أو اضغط زر التفاصيل بجانبه لإدخال كل مشتريات البند بسعرها، والمجموع يتحسب تلقائيًا. البيانات محفوظة في متصفحك.</p>
-  <section>
-    <h2>توزيع المصروفات في الشهر المختار</h2>
-    <div id="chart"></div>
-  </section>
-</main>
-<dialog id="dlg"></dialog>
-<script src="app.js"></script>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">₪</div>
+      <div><h1>ميزانية البيت</h1><p>تابع دخلك ومصروفاتك بسهولة</p></div>
+    </div>
+    <div class="tools">
+      <button id="addMonth" class="btn btn-primary">＋ شهر</button>
+      <button id="addRow" class="btn btn-primary">＋ بند مصروف</button>
+      <button id="csv" class="btn">تصدير Excel</button>
+      <button id="save" class="btn">حفظ نسخة</button>
+      <label class="btn file-btn">استيراد نسخة<input type="file" id="load" accept=".json,application/json" hidden></label>
+      <button id="print" class="btn">طباعة</button>
+      <button id="theme" class="btn">الوضع الداكن</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar-panel">
+      <label class="field-label" for="mSel">الشهر المختار</label>
+      <select id="mSel" class="month-select" aria-label="اختيار الشهر"></select>
+      <p class="hint">أدخل دخلك الشهري، ثم أضف بنود المصروفات التي تحتاجها فقط. الإجماليات والباقي يتم حسابها تلقائيًا.</p>
+    </section>
+
+    <section id="cards" class="summary-grid" aria-live="polite"></section>
+
+    <section class="section-panel">
+      <div class="section-heading">
+        <div><h2>الدخل والمصروفات</h2><p>أدخل المبالغ مباشرة أو افتح التفاصيل لتسجيل المشتريات.</p></div>
+      </div>
+      <div class="wrap"><table id="tbl"></table></div>
+    </section>
+
+    <section class="section-panel chart-panel">
+      <div class="section-heading">
+        <div><h2>تفاصيل بند من مصروفات الشهر</h2><p>اختر بندًا من القائمة بدل عرض كل البنود أسفل الصفحة.</p></div>
+      </div>
+      <label class="field-label" for="expenseSelect">اختيار بند المصروف</label>
+      <select id="expenseSelect" class="expense-select"><option value="">لا توجد بنود مصروفات بعد</option></select>
+      <div id="chart" class="selected-expense" aria-live="polite"></div>
+    </section>
+    <p class="footer-note">بياناتك تُحفظ في هذا المتصفح. استخدم «حفظ نسخة» للاحتفاظ بنسخة احتياطية.</p>
+  </main>
+  <dialog id="dlg"></dialog>
+  <script src="./script.js"></script>
 </body>
 </html>
